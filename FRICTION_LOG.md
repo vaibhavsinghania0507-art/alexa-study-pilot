@@ -1,0 +1,8 @@
+# Friction Log — Study Pilot (Alexa+ track)
+
+| # | Task | Steps taken | Expected | Actual | Severity | Workaround | Suggestion |
+|---|---|---|---|---|---|---|---|
+| 1 | Get a minimal MCP server running | `pip install "mcp[cli]"`, ran quickstart code using `from mcp.server.fastmcp import FastMCP` | Server starts | `ModuleNotFoundError`: pip installed SDK 2.x, where FastMCP was renamed to MCPServer | High (blocks hello world) | Pinned `mcp[cli]==1.30.0` | List the exact SDK versions known to work with Alexa+ on the Resources page |
+| 2 | Confirm the server meets "spec 2025-11-25 or later" | Checked `LATEST_PROTOCOL_VERSION`: SDK 2.x = 2026-07-28, 1.30.0 = 2025-11-25 | A clear list of accepted protocol versions | Rules say "or later, once confirmed" but no confirmation found | Medium | Pinned SDK so it negotiates exactly 2025-11-25 | Publish accepted versions on the Rules/Resources page |
+| 3 | Check the running server in a browser | Opened `http://127.0.0.1:8000/mcp` | A page confirming the server works | Raw JSON-RPC error: "Not Acceptable: Client must accept text/event-stream" (HTTP 406); I thought the server was broken | Low | Added a `/health` route; tested with the MCP client instead | Return a friendly HTML page for browser GETs on MCP endpoints, or mention this in the getting-started docs |
+| 4 | Test the MCP server with real Alexa+ | Read the Alexa+ resources (Agent Skills, Streamable HTTP docs) | A way to connect a self-hosted server to an Alexa+ test environment | Couldn't find one; only the simulated path is described | Medium | Wrote a demo client that plays the Alexa+ role using the official MCP client | A developer test console: paste an MCP URL and talk to it through Alexa+ |
